@@ -1,0 +1,16 @@
+Void function W_WeaponFrame();
+{
+  if (self.impulse == 12) {
+    makevectors(self.v_angle);
+    self.velocity = self.velocity - 200 * v_forward;
+    self.impulse = 0;
+    }
+  if (time < self.attack_finished) {
+    exit;
+    }
+  ImpulseCommands();
+  if (self.button0) {
+    SuperDamageSound();
+    W_Attack();
+    }
+}

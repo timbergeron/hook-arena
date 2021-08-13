@@ -1,0 +1,33 @@
+progs.dat
+
+defs.qc
+js_defs.qc //js: added for resume 0.95
+resume.qc  //js: main file
+subs.qc
+observer.qc
+combat.qc
+items.qc
+ccam.qc
+binds.qc
+weapons.qc
+world.qc
+
+clienta.qc
+rotate.qc
+clientb.qc
+
+
+
+
+spectate.qc
+player.qc
+doors.qc
+buttons.qc
+triggers.qc
+plats.qc
+misc.qc
+
+server.qc
+CHAIN.QC
+
+

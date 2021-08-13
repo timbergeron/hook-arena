@@ -1,0 +1,94 @@
+
+       ---===  DEACC  &  REACC  ===---
+
+This is a set of utilities allowing you to decompile and
+recompile the QuakeC programs included into the game Quake,
+from ID Software. See how they programmed Quake behaviors.
+
+Included examples : guided missiles following monsters,
+pipebombs like in Duke Nukem that only explode at your
+keypress, and more. These utilities allow you to change or
+add almost anything to monsters, items, etc, etc, etc...
+
+They require you to expand your pak0.pak file. To do this, see
+utilities like SWUNPACK. DEACC and REACC work with the file
+"progs.dat", found in the root of the expanded pak file.
+
+
+ * DEACC *
+
+Syntax :  DEACC <path and filename to the file progs.dat>
+
+Decompiles progs.dat. It will write a whole bunch of files with
+the extension .qc into the current directory. These are NOT
+ID's original files, don't ask anything to ID about them. They
+only contains what can be reconstituted from the progs.dat
+file. Anyway, they are very complete, and include function
+names, global variables names, and even local variables names.
+progs.dat is generous of such information.
+
+Sorry for the purists, but the result isn't C. It's some
+strange mixture of Pascal and C... But it IS very close to C,
+and shouldn't be difficult to understand.
+
+
+ * REACC *
+
+Syntax : REACC <path and filename for the progs.dat to write>
+
+Recompiles .qc files. It takes all the .qc files of the current
+directory and compile them back into a progs.dat file. Make
+changes in the original .qc files, then compile them back with
+this tool, and try them with Quake. Don't forget to do a backup
+of your original progs.dat file before replacing it with a file
+produced by REACC.
+
+Note that the compiled progs.dat file is smaller than the
+original, thanks to the more compact code produced and better
+string-redundancy checking.
+
+Screen comments are in french... I hope this won't be a too big
+problem, as they are not very important.
+
+
+ * Patches *
+
+.qc files are compiled in alphabetical order, and if a function
+appears twice, it is only compiled the first time. This means
+that you can make "patch" .qc files replacing a few of the
+original functions, as long as the filename is before the
+original filename in alphabetical order. I suggest naming patch
+files with a leading "$". A few examples are included, named
+$*.QR. To try one of them, change its extension to .qc and run
+REACC. Here is a description of them :
+
+- $GUIDMIS : your missiles have auto-sensors and follow
+             monsters. Very useful !
+
+- $PIPBOMB : grenades don't explode automatically any more, but
+             only when you issue the "impulse 12" command. You
+             can bind this command to a new key, like *, by
+             adding the following line to your autoexec.cfg :
+
+                bind * "impulse 12"
+
+- $BREATH  : a "Breath-out-to-go-back" moving method to use
+             with low- or zero-gravity levels : without
+             gravity, you can't walk any more, but with this
+             patch, you can "breath", which will push you
+             backward. A strange type of movement... Try this
+             in deathmatch... To "breath", you also have to
+             issue the "impulse 12" command (see above). This
+             Means you can't try simultaneously $PIPBOMB and
+             $BREATH (I think this would require too many keys 
+             anyway).
+
+---
+
+NO WARRANTIES. This software is provided "as is". Use at your
+own risk. The author cannot be held responsible for any damage,
+neither direct nor indirect, caused to your computer or its
+data.
+
+Author : Armin Rigo, armin.rigo@p22.gnothi.fn.alphanet.ch
+Any comment / bug report is welcome.

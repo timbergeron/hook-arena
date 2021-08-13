@@ -1,0 +1,85 @@
+objdata
+  GrenadeSuivante : Object;   // new object data for linked-list of grenades
+
+Void function GrenadeTouch();
+var
+  P : Object;
+{
+  if (other == self.owner) {
+    exit;
+    }
+
+// no more explosion when touching a monster
+
+  sound(self, CHAN_WEAPON, "weapons/bounce.wav", 1, ATTN_NORM);
+  if (self.velocity == VEC_ORIGIN) {
+    self.avelocity = VEC_ORIGIN;
+    }
+}
+
+Void function ExploseGrenades();
+var
+ joueur : Object;
+{
+  if (self.GrenadeSuivante) {
+    joueur = self;
+    do {
+      sprint(joueur, "Boum ! ");
+      self = joueur.GrenadeSuivante;
+      joueur.GrenadeSuivante = self.GrenadeSuivante;
+      GrenadeExplode();
+      } while (joueur.GrenadeSuivante);
+    sprint(self = joueur, "|");
+    }
+}
+
+Void function W_FireGrenade();    // replaces W_FireGrenade found in WEAPONS.QC
+var
+ missile : Object;
+ mpuff : Object;
+{
+  self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
+  sound(self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
+  self.punchangle_x = CONTENT_SOLID;
+  missile = spawn();
+  missile.owner = self;
+  missile.movetype = MOVETYPE_BOUNCE;
+  missile.solid = SOLID_BBOX;
+  missile.classname = "grenade";
+  makevectors(self.v_angle);
+  if (self.v_angle_x) {
+    missile.velocity = v_forward * 600 + v_up * 200 + crandom() * v_right * MOVETYPE_BOUNCE + crandom() * v_up * MOVETYPE_BOUNCE;
+    }
+  else {
+    missile.velocity = aim(self, 10000);
+    missile.velocity = missile.velocity * 600;
+    missile.velocity_z = 200;
+    }
+  missile.avelocity = [300 300 300];
+  missile.angles = vectoangles(missile.velocity);
+  missile.touch = GrenadeTouch;
+//  missile.nextthink = time + 2.5;
+//  missile.think = GrenadeExplode;
+  setmodel(missile, "progs/grenade.mdl");
+  setsize(missile, VEC_ORIGIN, VEC_ORIGIN);
+  setorigin(missile, self.origin);
+
+  missile.GrenadeSuivante = self.GrenadeSuivante;
+  self.GrenadeSuivante = missile;
+}
+
+Void function W_WeaponFrame();   //  replaces W_WeaponFrame found in WEAPONS.QC
+{
+  if (self.impulse == 12) {      //   This is
+    ExploseGrenades();           //   what I
+    self.impulse = 0;            //   added here.
+    }
+  if (time < self.attack_finished) {
+    exit;
+    }
+  ImpulseCommands();
+  if (self.button0) {
+    SuperDamageSound();
+    W_Attack();
+    }
+}

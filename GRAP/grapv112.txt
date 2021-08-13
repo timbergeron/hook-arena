@@ -1,0 +1,22 @@
+TITLE:	Grappling Hook V. 1.12
+
+AUTHOR:	M. Vinskus (Sid 6.7)
+DATE:  	22-DEC-98
+
+DESCRIPTION:
+	Modified version of Grapv111
+
+ABSTRACT:	
+	Removed paralyzation property of the hook.  This makes the hook a legitimate 
+tool/weapon now.  Otherwise, it might as well be an instant death gun.  
+
+USAGE:
+	1.  Create a directory under the quake directory called grapv112
+	2.  Unzip the contents of grapv112.zip into that directory
+	3.  Run quake with "quake -game grapv112"
+	4.  The controls and parameters for the hook are the same as in grapv111
+
+
+Happy hunting:
+
+--Sid 6.7
